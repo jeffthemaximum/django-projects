@@ -22,12 +22,12 @@ def perform_create(self, serializer):
     return super(PostViewSet, self).perform_create(serializer)
 
 
-class AccountPostsViewSet(viewsets.viewset):
+class AccountPostsViewSet(viewsets.Viewset):
     queryset = Post.objects.select_related('author').all()
     serializer_class = PostSerializer
 
     def list(self, request, account_username=None):
-        queryset = self.queryset.filter(author_username=account_username)
+        queryset = self.queryset.filter(author__username=account_username)
         serializer = self.serializer_class(queryset, many=True)
 
         return Response(serializer.data)
