@@ -47,7 +47,11 @@
         username: username,
         password: password,
         email: email
-      });
+      }).then(registerSuccessFn, registerErrorFn);
+    }
+
+    function registerSucessFn(data, status, config) {
+        Authentication.login(email, password);
     }
 
     function login(email, password) {
