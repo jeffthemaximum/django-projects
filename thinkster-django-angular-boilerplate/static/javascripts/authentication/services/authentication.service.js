@@ -54,6 +54,10 @@
         Authentication.login(email, password);
     }
 
+    function registerErrorFn(data, status, headers, config) {
+        console.error('Epic failure!');
+    }
+
     function login(email, password) {
       return $http.post('/api/v1/auth/login/', {
         email:email, password: password

@@ -1,7 +1,8 @@
 import json
+import pudb
 
-from django.contrib.auth import authenticate, login
-from rest_framework import permissions, viewsets, status, views
+from django.contrib.auth import authenticate, login, logout
+from rest_framework import permissions, viewsets, status, views, permissions
 from rest_framework.response import Response
 from authentication.models import Account
 from authentication.permissions import IsAccountOwner
@@ -20,7 +21,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         if self.request.method == 'POST':
             return (permissions.AllowAny(),)
 
-        return (permissions.IsAuthenticated(), IsAccountOwnder(),)
+        return (permissions.IsAuthenticated(), IsAccountOwner(),)
 
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -46,20 +47,28 @@ class LoginView(views.APIView):
         account = authenticate(email=email, password=password)
 
         if account is not None:
-            if account.is_activate:
+            if account.is_active:
                 login(request, account)
 
                 serialized = AccountSerializer(account)
 
                 return Response(serialized.data)
-
             else:
                 return Response({
                     'status': 'Unauthorized',
-                    'message': 'This account has been disabled'
-                    }, status=status.HTTP_401_UNAUTHORIZED)
+                    'message': 'This account has been disabled.'
+                }, status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response({
                 'status': 'Unauthorized',
-                'message': 'Username/password combination invalid.' 
-                }, status=status.HTTP_401_UNAUTHORIZED)
+                'message': 'Username/password combination invalid.'
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class LogoutView(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, format=None):
+        logout(request)
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
