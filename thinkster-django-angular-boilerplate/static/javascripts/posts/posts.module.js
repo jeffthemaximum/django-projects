@@ -3,7 +3,7 @@
 
     angular
         .module('thinkster.posts', [
-            '.thinkster.posts.controllers',
+            'thinkster.posts.controllers',
             'thinkster.posts.directives',
             'thinkster.posts.services'
         ]);

@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
-from post.models import Post
+from posts.models import Post
 from posts.permissions import IsAuthorOfPost
-from post.serializers import PostSerializer
+from posts.serializers import PostSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -22,7 +22,7 @@ def perform_create(self, serializer):
     return super(PostViewSet, self).perform_create(serializer)
 
 
-class AccountPostsViewSet(viewsets.Viewset):
+class AccountPostsViewSet(viewsets.ViewSet):
     queryset = Post.objects.select_related('author').all()
     serializer_class = PostSerializer
 

@@ -1,33 +1,65 @@
+/**
+ * Posts
+ * @namespace thinkster.posts.services
+ */
 (function () {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('thinkster.posts.services')
-        .factory('Posts', Posts);
+  angular
+    .module('thinkster.posts.services')
+    .factory('Posts', Posts);
 
-    Posts.$inject = ['$http'];
+  Posts.$inject = ['$http'];
 
-    function Posts($http) {
-        var Posts = {
-            all: all
-            create: create,
-            get: get
-        };
+  /**
+   * @namespace Posts
+   * @returns {Factory}
+   */
+  function Posts($http) {
+    var Posts = {
+      all: all,
+      get: get,
+      create: create
+    };
 
-        return Posts;
+    return Posts;
 
-        function all() {
-            return $http.get('/api/v1/posts/');
-        }
-
-        function create(content) {
-            return $http.post('/api/v1/posts/', {
-                content: content
-            });
-        }
-
-        function get(username) {
-            return $http.get('/api/v1/accounts/' + username + '/posts/');
-        }
+    ////////////////////
+    
+    /**
+     * @name all
+     * @desc Get all Posts
+     * @returns {Promise}
+     * @memberOf thinkster.posts.services.Posts
+     */
+    function all() {
+      return $http.get('/api/v1/posts/');
     }
+
+
+    /**
+     * @name create
+     * @desc Create a new Post
+     * @param {string} content The content of the new Post
+     * @returns {Promise}
+     * @memberOf thinkster.posts.services.Posts
+     */
+    function create(content) {
+      return $http.post('/api/v1/posts/', {
+        content: content
+      });
+    }
+
+
+    /**
+     * @name get
+     * @desc Get the Posts of a given user
+     * @param {string} username The username to get Posts for
+     * @returns {Promise}
+     * @memberOf thinkster.posts.services.Posts
+     */
+    function get(id) {
+      return $http.get('/api/v1/accounts/' + id + '/posts/');
+    }
+  }
 })();
