@@ -25,9 +25,10 @@
       controllerAs: 'vm',
       templateUrl: '/static/templates/authentication/login.html'
     }).when('/+:username', {
-      controller: 'AccountController',
+      controller: 'ProfileController',
       controllerAs: 'vm',
-      templateUrl: '/static/templates/accounts/account.html'
-    }).otherwise('/');
+      templateUrl: '/static/templates/profiles/profile.html'
+    })
+    .otherwise('/');
   }
 })();
