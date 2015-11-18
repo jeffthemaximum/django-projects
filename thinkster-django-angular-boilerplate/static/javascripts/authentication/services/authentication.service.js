@@ -51,8 +51,8 @@
       }).then(registerSuccessFn, registerErrorFn);
     }
 
-    function registerSucessFn(data, status, config) {
-        Authentication.login(email, password);
+    function registerSuccessFn(data, status, config) {
+        Authentication.login(data.data.email, data.data.password);
     }
 
     function registerErrorFn(data, status, headers, config) {

@@ -9,5 +9,5 @@
         .module('thinkster.profiles.controllers', []);
 
     angular
-        .module('thunkster.profiles.services', []);
+        .module('thinkster.profiles.services', []);
 })();

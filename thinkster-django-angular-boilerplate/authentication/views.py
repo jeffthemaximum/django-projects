@@ -2,10 +2,12 @@ import json
 import pudb
 
 from django.contrib.auth import authenticate, login, logout
-from rest_framework import permissions, viewsets, status, views, permissions
+
+from rest_framework import permissions, status, views, viewsets
 from rest_framework.response import Response
-from authentication.models import Account
+
 from authentication.permissions import IsAccountOwner
+from authentication.models import Account
 from authentication.serializers import AccountSerializer
 
 
@@ -29,11 +31,10 @@ class AccountViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             Account.objects.create_user(**serializer.validated_data)
 
-            return Response(serializer.validate_data, status=status.HTTP_201_CREATED)
-
+            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
         return Response({
             'status': 'Bad request',
-            'message': "Account could not be created with received data."
+            'message': 'Account could not be created with received data.'
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
